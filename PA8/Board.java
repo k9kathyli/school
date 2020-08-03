@@ -3,6 +3,8 @@ import java.util.*;
 import java.io.*;
 
 /**
+ * This file contains the class for the game board, as well as the functions to
+ * manipulate game characters and their movements.
  * @author      Kathy Li <kal005@ucsd.edu>
  */
 public class Board{
@@ -111,7 +113,14 @@ public class Board{
         if (x < 0 || y < 0 || x >= GRID_SIZE || y > GRID_SIZE) return;
         visited[x][y] = true;
     }
-
+  /*
+   * Name:      refreshGrid
+   * Purpose:   Reset the board grid based on the matrix of visited spots and characters' locations.
+   *            visited is a 2D array of boolean values, representing whether Pac-man had visited that
+   *            spot or not.
+   * Parameter: None
+   * Return:    None
+   */
     public void refreshGrid() {
         for (int i = 0; i < GRID_SIZE; i++)
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -129,7 +138,12 @@ public class Board{
 
     }
 
-
+  /* 
+   * Name:      canMove
+   * Purpose:   Check if a character can move in a specific direction
+   * Parameter: The direction to move
+   * Return:    True if the direction is a valid move, otherwise false
+   */
     public boolean canMove(Direction direction) {
         if (direction == null) return false;
         // Calculate Coordinate after Displacement
@@ -139,7 +153,12 @@ public class Board{
         return pacmanRow >= 0 && pacmanRow < GRID_SIZE && pacmanCol >= 0 && pacmanCol < GRID_SIZE;
     }
 
-
+  /* 
+   * Name:      move
+   * Purpose:   Move a character a space in one direction, then refresh the grid to reflect the change
+   * Parameter: The direction to move
+   * Return:    None
+   */
     public void move(Direction direction) {
         // Calculate Coordinate after Displacement
         int pacmanRow = pacman.getRow() + direction.getY();
@@ -154,22 +173,31 @@ public class Board{
         for (PacCharacter ghost : ghosts) {
             ghostMove(ghost);
         }
-
         refreshGrid();
     }
 
-
+  /* 
+   * Name:      isGameOver
+   * Purpose:   Check for game end condition
+   * Parameter: None
+   * Return:    true if the game is over, otherwise false
+   */
     public boolean isGameOver() {
         int pacmanRow = pacman.getRow();
         int pacmanCol = pacman.getCol();
-
+        // If any ghost has the same location as Pac-man, the game is over
         for (PacCharacter ghost : ghosts)
             if (ghost.getRow() == pacmanRow && ghost.getCol() == pacmanCol)
                 return true;
         return false;
     }
 
-    // Calculate where each ghost should move next. Ghosts will always try to get closer to Pac-man
+  /* 
+   * Name:      ghostMove
+   * Purpose:   Calculate where each ghost should move next. Ghosts will always try to get closer to Pac-man
+   * Parameter: The ghost to move
+   * Return:    A direction for the ghost to move
+   */
     public Direction ghostMove(PacCharacter ghost) {
         // Calculate Pac-man's current position
         int pacmanRow = pacman.getRow();
@@ -206,9 +234,7 @@ public class Board{
         // Pac-man captured, ghost shouldn't move
         else if (rowDist == 0 && colDist == 0) {
             return Direction.STAY;
-        }
-        
-        else {
+        } else {
             // Minimize row or column distance depending on which is larger    
             if (rowDist < colDist) {
                 if (ghostRow - pacmanRow > 0) {
@@ -230,6 +256,12 @@ public class Board{
         }
     }
 
+  /* 
+   * Name:      toString
+   * Purpose:   Convert the board to a string to be displayed in terminal
+   * Parameter: None
+   * Return:    The board as a string
+   */
     public String toString(){
         StringBuilder outputString = new StringBuilder();
         outputString.append(String.format("Score: %d\n", this.score));
