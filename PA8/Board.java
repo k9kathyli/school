@@ -3,7 +3,7 @@ import java.util.*;
 import java.io.*;
 
 /**
- * @author      Firstname Lastname <address @ example.com>
+ * @author      Kathy Li <kal005@ucsd.edu>
  */
 public class Board{
 
@@ -20,10 +20,9 @@ public class Board{
     /*
      * Constructor
      *
-     * <p> Description: TODO
+     * Description: Create a new Pac-Man board to play
      *
-     * @param:  TODO
-     * @return: TODO
+     * Parameters:  size: height and width of board to be created 
      */
     public Board(int size) {
 
@@ -47,7 +46,6 @@ public class Board{
 
 
 
-    // To Tutors: this is for PA6
     public Board(String inputBoard) throws IOException {
         // Create a scanner to scan the inputBoard.
         Scanner input = new Scanner(new File(inputBoard));
@@ -98,8 +96,6 @@ public class Board{
                 }
             }
         }
-
-
     }
 
 
@@ -178,17 +174,21 @@ public class Board{
 
     }
 
-    // Monster always move towards Pac-man
+    // Calculate where each ghost should move next. Ghosts will always try to get closer to Pac-man
     public Direction ghostMove(PacCharacter ghost) {
+        // Calculate Pac-man's current position
         int pacmanRow = pacman.getRow();
         int pacmanCol = pacman.getCol();
 
+        // Calculate ghost's current position
         int ghostRow = ghost.getRow();
         int ghostCol = ghost.getCol();
-
+        
+        // Get distance between Pac-man and ghost
         int rowDist = Math.abs(ghostRow - pacmanRow);
         int colDist = Math.abs(ghostCol - pacmanCol);
 
+        // Ghost is in the same row but not same column
         if (rowDist == 0 && colDist > 0) {
             if (ghostCol - pacmanCol > 0) {
                 ghost.setPosition(ghostRow, ghostCol - 1);
@@ -198,6 +198,7 @@ public class Board{
                 return Direction.RIGHT;
             }
         }
+        // Ghost is in the same column but not same row
         else if (rowDist > 0 && colDist == 0 ) {
             if (ghostRow - pacmanRow > 0) {
                 ghost.setPosition(ghostRow - 1, ghostCol);
@@ -207,10 +208,13 @@ public class Board{
                 return Direction.DOWN;
             }
         }
+        // Pac-man captured, ghost shouldn't move
         else if (rowDist == 0 && colDist == 0) {
             return Direction.STAY;
         }
+        
         else {
+            // Minimize row or column distance depending on which is larger    
             if (rowDist < colDist) {
                 if (ghostRow - pacmanRow > 0) {
                     ghost.setPosition(ghostRow - 1, ghostCol);
