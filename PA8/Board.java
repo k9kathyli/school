@@ -16,7 +16,7 @@ public class Board{
     private PacCharacter[] ghosts;  // 4 Ghosts that controlled by the program
     private int score;              // Score Recorded for the gamer
 
-
+    
     /*
      * Constructor
      *
@@ -44,8 +44,7 @@ public class Board{
         refreshGrid();
     }
 
-
-
+    
     public Board(String inputBoard) throws IOException {
         // Create a scanner to scan the inputBoard.
         Scanner input = new Scanner(new File(inputBoard));
@@ -114,7 +113,6 @@ public class Board{
     }
 
     public void refreshGrid() {
-
         for (int i = 0; i < GRID_SIZE; i++)
             for (int j = 0; j < GRID_SIZE; j++) {
                 if (!visited[i][j])
@@ -122,7 +120,6 @@ public class Board{
                 else
                     grid[i][j] = ' ';
             }
-
         grid[pacman.getRow()][pacman.getCol()] = pacman.getAppearance();
         for (PacCharacter ghost : ghosts) {
             if (pacman.getRow() == ghost.getRow() && pacman.getCol() == ghost.getCol())
@@ -169,9 +166,7 @@ public class Board{
         for (PacCharacter ghost : ghosts)
             if (ghost.getRow() == pacmanRow && ghost.getCol() == pacmanCol)
                 return true;
-
         return false;
-
     }
 
     // Calculate where each ghost should move next. Ghosts will always try to get closer to Pac-man
@@ -233,34 +228,9 @@ public class Board{
                 }
             }
         }
-
     }
-
-
-
-
-    // To Tutors: this is for PA6
-    public void saveBoard(String outputBoard) throws IOException
-    {
-        PrintWriter output = new PrintWriter(new File(outputBoard));
-        // First print out the GRID_SIZE.
-        output.println(GRID_SIZE);
-        // Second print out the score.
-        output.println(score);
-
-        for ( int rowIndex = 0; rowIndex < GRID_SIZE; rowIndex++ )
-        {
-            for ( int colIndex = 0; colIndex < GRID_SIZE; colIndex++ )
-                output.print(grid[rowIndex][colIndex]);
-            output.print("\n");
-        }
-        output.close();
-    }
-
-
 
     public String toString(){
-
         StringBuilder outputString = new StringBuilder();
         outputString.append(String.format("Score: %d\n", this.score));
 
@@ -270,14 +240,8 @@ public class Board{
                 outputString.append("  ");
                 outputString.append(grid[row][column]);
             }
-
             outputString.append("\n");
         }
         return outputString.toString();
-
     }
-
-
-
-
 }
