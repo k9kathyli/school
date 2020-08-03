@@ -198,7 +198,6 @@ public class GuiPacman extends Application
   } // End of Inner Class myKeyHandler.
 
 
-
   /*
    * Name:        Tile
    *
@@ -253,10 +252,6 @@ public class GuiPacman extends Application
 
   }  // End of Inner class Tile
 
-
-
-
-  /** DO NOT EDIT BELOW */
 
   // The method used to process the command line arguments
   private void processArgs(String[] args)
